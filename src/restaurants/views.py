@@ -1,7 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+
 
 # Create your views here.
 
@@ -50,7 +52,10 @@ class AboutView(TemplateView):
 class ContactView(TemplateView):
 	template_name = "contact.html"
 
+
+# Restaurant App
 from .models import Restaurant
+# function based view
 def restaurant_view(request):
 	template_name = 'restaurants/restaurant.html'
 	queryset = Restaurant.objects.all()
@@ -58,3 +63,18 @@ def restaurant_view(request):
 		"list": queryset
 	}
 	return render(request,template_name,context)
+
+
+#class based view
+class RestaurantView(ListView):
+	template_name = 'restaurants/restaurant.html'
+	def get_queryset(self):
+		slug = self.kwargs.get("slug")
+		if slug:
+			queryset = Restaurant.objects.filter(
+				Q(category__iexact=slug)
+			)
+		else:
+			queryset = Restaurant.objects.all()
+		print(queryset)
+		return queryset
