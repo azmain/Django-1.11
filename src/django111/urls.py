@@ -21,7 +21,8 @@ from restaurants.views import (
     AboutView,
     ContactView,
     restaurant_view,
-    RestaurantView
+    RestaurantView,
+    RestaurantDetailView
 )
 
 
@@ -29,7 +30,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view()),
     url(r'^restaurant/$', RestaurantView.as_view()),
-    url(r'^restaurant/(?P<slug>\w+)$', RestaurantView.as_view()),
+    # url(r'^restaurant/(?P<slug>\w+)$', RestaurantView.as_view()),
+    url(r'^restaurant/(?P<slug>[\w-]+)/$', RestaurantDetailView.as_view()),
     url(r'^about/$', AboutView.as_view()),
     url(r'^contact/$', ContactView.as_view()),
 ]
