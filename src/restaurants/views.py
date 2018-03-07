@@ -98,3 +98,12 @@ class RestaurantDetailView(DetailView):
 	# 	rest_id = self.kwargs.get('rest_id')
 	# 	obj = get_object_or_404(Restaurant,id=rest_id) #pk=rest_id
 	# 	return obj
+
+from django.views.generic import CreateView
+from django import forms
+from .forms import RestaurantCreateForm
+
+class RestaurantCreateView(CreateView):
+	form_class = RestaurantCreateForm
+	template_name = 'restaurants/create.html'
+	success_url = '/restaurant/'

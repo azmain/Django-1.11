@@ -1,10 +1,11 @@
 from django.db import models
+from .validators import validate_category
 
 # Create your models here.
 class Restaurant(models.Model):
 	name	= models.CharField(max_length=120)
 	location = models.CharField(max_length=120,null=True,blank=True)
-	category = models.CharField(max_length=120,null=True,blank=True)
+	category = models.CharField(max_length=120,null=True,blank=True,validators=[validate_category])
 	timestamp = models.DateTimeField(auto_now_add=True)
 	updated   = models.DateTimeField(auto_now=True)
 	my_date   = models.DateField(auto_now=False,auto_now_add=False)
@@ -24,6 +25,7 @@ from restaurants.utils import unique_slug_generator
 def rl_pre_save_receiver(sender,instance,*args,**kwargs):
 	# print('saving...')
 	# print(instance.timestamp)
+	instance.category = instance.category.capitalize()
 	if not instance.slug:
 		instance.slug = unique_slug_generator(instance)
 
