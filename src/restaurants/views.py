@@ -102,8 +102,16 @@ class RestaurantDetailView(DetailView):
 from django.views.generic import CreateView
 from django import forms
 from .forms import RestaurantCreateForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class RestaurantCreateView(CreateView):
+class RestaurantCreateView(LoginRequiredMixin,CreateView):
 	form_class = RestaurantCreateForm
+	login_url = '/login'
 	template_name = 'restaurants/create.html'
-	success_url = '/restaurant/'
+	#success_url = '/restaurant/'
+
+	def form_valid(self,form):
+		instance = form.save(commit=False)
+		instance.owner = self.request.user
+		return super(RestaurantCreateView,self).form_valid(form)
+
