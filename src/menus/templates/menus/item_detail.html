@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block home_title %}Menu Items{% endblock %}
+
+{% block content %}
+<h1>Menu Items</h1><br>
+<h3>{{ object.name }}, <small>{{ object.restaurant }}</small></h3><br>
+Contents: <p>{{ object.contents }}</p>
+Excludes: <p>{{ object.excludes }}</p>
+<p>Updated {{ object.updated }} ago</p>
+{% endblock %}

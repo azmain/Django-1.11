@@ -30,6 +30,7 @@ from django.contrib.auth.views import LoginView,PasswordResetView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^menus/', include('menus.urls', namespace='menus')),
     url(r'^restaurant/', include('restaurants.urls', namespace='restaurant')),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^reset/$', PasswordResetView.as_view(), name='password_reset'),

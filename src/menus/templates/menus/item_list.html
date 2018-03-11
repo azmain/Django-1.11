@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block home_title %}Menu Items{% endblock %}
+
+{% block content %}
+<h3>Menu Items</h3>
+
+<ul>
+	{% for item in object_list %}
+	<li>
+		<a href="{{ item.get_absolute_url }}">{{ item.name }}</a><br>
+		Contents:
+		<ul>
+			{{ item.contents }}
+		</ul>
+		Excludes:
+		<ul>
+			{{ item.excludes }}
+		</ul>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}
