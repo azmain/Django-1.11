@@ -107,11 +107,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class RestaurantCreateView(LoginRequiredMixin,CreateView):
 	form_class = RestaurantCreateForm
 	login_url = '/login'
-	template_name = 'restaurants/create.html'
+	template_name = 'create.html'
 	#success_url = '/restaurant/'
 
 	def form_valid(self,form):
 		instance = form.save(commit=False)
 		instance.owner = self.request.user
 		return super(RestaurantCreateView,self).form_valid(form)
+
+	def get_context_data(self,*args,**kwargs):
+		context = super(RestaurantCreateView,self).get_context_data(*args,**kwargs)
+		context['title'] = 'Restaurants'
+		return context
 
