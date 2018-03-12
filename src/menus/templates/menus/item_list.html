@@ -2,7 +2,7 @@
 {% block home_title %}Menu Items{% endblock %}
 
 {% block content %}
-<h3>Menu Items</h3>
+<h3>Menu Items <small><a href='{% url "menus:create" %}'>Add</a></small></h3>
 
 <ul>
 	{% for item in object_list %}
@@ -16,6 +16,10 @@
 		<ul>
 			{{ item.excludes }}
 		</ul>
+	</li>
+	{% empty %}
+	<li>
+		<a href='{% url "menus:create" %}'>Add</a>
 	</li>
 	{% endfor %}
 </ul>

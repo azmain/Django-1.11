@@ -2,13 +2,16 @@
 {% block home_title %}Restaurants{% endblock %}
 
 {% block content %}
-<h3>Restaurants</h3>
+<h3>My Restaurants <small><a href='{% url "restaurant:create" %}'>Add</a></small></h3>
 
 <ul>
 	{% for item in object_list %}
 	<li>
 		<a href="{{ item.get_absolute_url }}">{{ item.name }}</a> , {{ item.location }} <br> {{ item.category }}
 	</li>
+	{% empty %}
+	<a href='{% url "restaurant:create" %}'>Add One</a>
+
 	{% endfor %}
 </ul>
 {% endblock %}

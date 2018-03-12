@@ -12,7 +12,8 @@ class RestaurantCreateForm(ModelForm):
 			'name',
 			'location',
 			'category',
-			'my_date'
+			'my_date',
+			'slug'
 		]
 	def clean_name(self):
 		name = self.cleaned_data.get("name")

@@ -10,16 +10,19 @@ from django.views.generic import (
 from .models import Item
 from .forms import ItemForm
 from django import forms
-
-class ItemListView(ListView):
-	def get_queryset(self):
-		return Item.objects.filter(user=self.request.user)
-
-class ItemDetailView(DetailView):
-	def get_queryset(self):
-		return Item.objects.filter(user=self.request.user)
-
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+class ItemListView(LoginRequiredMixin,ListView):
+	login_url = '/login'
+	def get_queryset(self):
+		return Item.objects.filter(user=self.request.user)
+
+class ItemDetailView(LoginRequiredMixin,DetailView):
+	login_url = '/login'
+	def get_queryset(self):
+		return Item.objects.filter(user=self.request.user)
+
+
 
 class ItemCreateView(LoginRequiredMixin,CreateView):
 	form_class = ItemForm
@@ -46,7 +49,7 @@ class ItemCreateView(LoginRequiredMixin,CreateView):
 class ItemUpdateView(LoginRequiredMixin,UpdateView):
 	form_class = ItemForm
 	login_url = '/login'
-	template_name = 'create.html'
+	template_name = 'menus/detail-update.html'
 	def get_queryset(self):
 		return Item.objects.filter(user=self.request.user)
 
@@ -57,5 +60,6 @@ class ItemUpdateView(LoginRequiredMixin,UpdateView):
 
 	def get_context_data(self,*args,**kwargs):
 		context = super(ItemUpdateView,self).get_context_data(*args,**kwargs)
-		context['title'] = 'Update Item'
+		name = self.get_object().name
+		context['title'] = f'Update Item: {name}'
 		return context

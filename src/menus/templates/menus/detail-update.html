@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block home_title %}Menu Items{% endblock %}
+
+{% block content %}
+<h1>Menu Items</h1><br>
+<h3>{{ form.instance.name }}, <small>{{ form.instance.restaurant }}</small></h3><br>
+Contents: <p>{{ form.instance.contents }}</p>
+Excludes: <p>{{ form.instance.excludes }}</p>
+<p>Updated {{ form.instance.updated }} ago</p>
+
+
+<hr>
+<h3>Make Changes</h3>
+{% include 'snippets/form.html' with form=form %}
+<br>
+{% endblock %}
